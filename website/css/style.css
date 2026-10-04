@@ -1,0 +1,361 @@
+/* ==============================================================================
+   VORTEX VPN — Official Website Stylesheet
+   High-Security Premium Product Showcase
+   ============================================================================== */
+
+:root {
+  --bg-dark: #08090C;
+  --bg-surface: #111318;
+  --bg-card: #161922;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(0, 229, 255, 0.4);
+
+  --accent-cyan: #00E5FF;
+  --accent-blue: #4F46E5;
+  --accent-green: #10B981;
+
+  --text-main: #F8FAFC;
+  --text-dim: #94A3B8;
+  --text-muted: #64748B;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 90%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Header & Nav */
+header.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(8, 9, 12, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 1000;
+  padding: 18px 0;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.nav-links a:hover {
+  color: var(--accent-cyan);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00E5FF, #4F46E5);
+  color: #08090C;
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.btn-outline:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent-cyan);
+}
+
+/* Hero Section */
+section.hero {
+  padding: 100px 0 80px 0;
+  text-align: center;
+  position: relative;
+}
+
+.hero-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--accent-cyan);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.hero-title span {
+  background: linear-gradient(135deg, #00E5FF, #4F46E5, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 18px;
+  color: var(--text-dim);
+  max-width: 640px;
+  margin: 0 auto 36px auto;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Pipeline Architecture Section */
+section.pipeline {
+  padding: 80px 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-head {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-head h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-head p {
+  color: var(--text-dim);
+  font-size: 16px;
+}
+
+.pipeline-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.pipe-step {
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pipe-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.pipe-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pipe-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.pipe-arrow {
+  color: var(--accent-cyan);
+  font-size: 20px;
+}
+
+/* Grid & Cards */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-glow);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+/* Global Network Fleet Table */
+.network-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.network-table th, .network-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.network-table th {
+  background: var(--bg-card);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  margin-right: 6px;
+}
+
+/* FAQ Accordion */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.faq-q {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.faq-a {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* Footer */
+footer.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 36px; }
+  .pipeline-diagram { flex-direction: column; }
+  .pipe-arrow { transform: rotate(90deg); }
+  .nav-links { display: none; }
+}

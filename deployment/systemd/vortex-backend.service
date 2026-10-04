@@ -1,0 +1,17 @@
+[Unit]
+Description=VORTEX VPN Control Plane & API Service
+After=network.target postgresql.service redis.service
+
+[Service]
+Type=simple
+User=vortexuser
+Group=vortexuser
+WorkingDirectory=/opt/vortex-vpn
+EnvironmentFile=/opt/vortex-vpn/.env
+ExecStart=/opt/vortex-vpn/.venv/bin/python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --workers 4
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

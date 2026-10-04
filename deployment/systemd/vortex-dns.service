@@ -1,0 +1,19 @@
+[Unit]
+Description=VORTEX VPN DNS Privacy & Ad/Tracker Blocker
+After=network.target
+
+[Service]
+Type=simple
+User=vortexuser
+Group=vortexuser
+WorkingDirectory=/opt/vortex-vpn
+EnvironmentFile=/opt/vortex-vpn/.env
+Environment=PYTHONPATH=/opt/vortex-vpn/dns-blocker
+ExecStart=/opt/vortex-vpn/.venv/bin/python /opt/vortex-vpn/dns-blocker/dns_server.py
+Restart=always
+RestartSec=3
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

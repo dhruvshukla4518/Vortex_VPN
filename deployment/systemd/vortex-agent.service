@@ -1,0 +1,16 @@
+[Unit]
+Description=VORTEX VPN Server Node Telemetry Agent
+After=network.target wg-quick@wg0.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/vortex-vpn
+EnvironmentFile=/opt/vortex-vpn/.env
+Environment=PYTHONPATH=/opt/vortex-vpn/server-agent
+ExecStart=/opt/vortex-vpn/.venv/bin/python /opt/vortex-vpn/server-agent/agent.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

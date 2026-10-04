@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # VORTEX Control Plane API & Web Client
+  backend:
+    build:
+      context: .
+      dockerfile: deployment/docker/Dockerfile.backend
+    container_name: vortex-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+asyncpg://vortex:secure_password@postgres:5432/vortex_vpn
+      - REDIS_URL=redis://redis:6379/0
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-vortex-super-secret-jwt-key-replace-in-production-min-32-chars}
+      - AGENT_SECRET_KEY=${AGENT_SECRET_KEY:-vortex-agent-node-secret-key-change-in-production}
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - vortex-net
+
+  # DNS Privacy & Ad/Tracker Blocker
+  dns-blocker:
+    build:
+      context: .
+      dockerfile: deployment/docker/Dockerfile.dns
+    container_name: vortex-dns
+    restart: always
+    ports:
+      - "5353:5353/udp"
+      - "5353:5353/tcp"
+    environment:
+      - DNS_BIND_HOST=0.0.0.0
+      - DNS_BIND_PORT=5353
+      - DNS_UPSTREAM_PRIMARY=9.9.9.9
+      - DNS_UPSTREAM_SECONDARY=1.1.1.1
+    networks:
+      - vortex-net
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: vortex-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=vortex
+      - POSTGRES_PASSWORD=secure_password
+      - POSTGRES_DB=vortex_vpn
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vortex-net
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: vortex-redis
+    restart: always
+    networks:
+      - vortex-net
+
+  # Streamlit Admin Console
+  admin:
+    build:
+      context: .
+      dockerfile: deployment/docker/Dockerfile.admin
+    container_name: vortex-admin
+    restart: always
+    ports:
+      - "8501:8501"
+    environment:
+      - CONTROL_PLANE_URL=http://backend:8000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - vortex-net
+
+networks:
+  vortex-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

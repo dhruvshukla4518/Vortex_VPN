@@ -1,0 +1,13 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir dnspython httpx
+
+COPY dns-blocker /app/dns-blocker
+
+ENV PYTHONPATH=/app/dns-blocker
+
+EXPOSE 5353/udp 5353/tcp
+
+CMD ["python", "/app/dns-blocker/dns_server.py"]

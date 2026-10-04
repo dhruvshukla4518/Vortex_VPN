@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090C">
+  <meta name="description" content="VORTEX VPN — High-Security WireGuard VPN & DNS Privacy Firewall. One tap. Protected.">
+  <title>VORTEX VPN — Official Privacy Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-row">
+      <a href="#" class="logo-brand">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="#00E5FF" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <circle cx="16" cy="16" r="8" stroke="#4F46E5" stroke-width="2"/>
+          <circle cx="16" cy="16" r="3" fill="#00E5FF"/>
+        </svg>
+        VORTEX VPN
+      </a>
+      <nav class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#network">Global Network</a>
+        <a href="#dns-firewall">DNS Firewall</a>
+        <a href="#security">Security</a>
+        <a href="#apps">Applications</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#download" class="btn btn-primary">Get VORTEX</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tagline">
+        <span>🛡️</span> Next-Gen WireGuard Architecture
+      </div>
+      <h1 class="hero-title">
+        Your connection.<br>
+        Your privacy.<br>
+        <span>One tap. Protected.</span>
+      </h1>
+      <p class="hero-desc">
+        A production-grade cybersecurity and privacy platform engineered with Curve25519 WireGuard tunneling and in-engine DNS-level ad, tracker, and malware interception.
+      </p>
+      <div class="hero-actions">
+        <a href="#download" class="btn btn-primary">Get VORTEX</a>
+        <a href="#network" class="btn btn-outline">Explore Network</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How VORTEX Works -->
+  <section id="how-it-works" class="pipeline">
+    <div class="container">
+      <div class="section-head">
+        <h2>How VORTEX Works</h2>
+        <p>A fail-closed zero-knowledge architecture protecting every packet from device to destination.</p>
+      </div>
+
+      <div class="pipeline-diagram">
+        <div class="pipe-step">
+          <div class="pipe-icon">📱</div>
+          <div class="pipe-title">DEVICE</div>
+          <div class="pipe-sub">Mobile / Desktop</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🔒</div>
+          <div class="pipe-title">ENCRYPTED</div>
+          <div class="pipe-sub">WireGuard Curve25519</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🌐</div>
+          <div class="pipe-title">VORTEX SERVER</div>
+          <div class="pipe-sub">Multi-Country Fleet</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🛡️</div>
+          <div class="pipe-title">DNS FIREWALL</div>
+          <div class="pipe-sub">Zero-IP Interception</div>
+        </div>
+        <div class="pipe-arrow">➔</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🌍</div>
+          <div class="pipe-title">INTERNET</div>
+          <div class="pipe-sub">Clean & Anonymous</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Network -->
+  <section id="network" style="padding: 80px 0;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Real Global VPN Fleet</h2>
+        <p>Actual high-speed bare-metal nodes reporting real-time latency and health metrics.</p>
+      </div>
+
+      <table class="network-table">
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>City</th>
+            <th>Ping Latency</th>
+            <th>Resource Load</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="fleet-table-body">
+          <!-- Populated dynamically via API -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DNS Firewall -->
+  <section id="dns-firewall" style="padding: 80px 0; background: var(--bg-surface);">
+    <div class="container">
+      <div class="section-head">
+        <h2>In-Engine DNS Firewall</h2>
+        <p>Stop ad tracking and malicious surveillance before requests ever leave your connection.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <span class="card-icon">🚫</span>
+          <div class="card-title">Ad Blocking</div>
+          <div class="card-desc">Zero-IP response (0.0.0.0) interception for intrusive display ads, popups, and bandwidth-wasting video trackers.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">🕵️</span>
+          <div class="card-title">Tracker Shield</div>
+          <div class="card-desc">Silences behavioral tracking pixels, analytics beacons, and surveillance SDKs embedded in apps and websites.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">☣️</span>
+          <div class="card-title">Malicious Domain Defense</div>
+          <div class="card-desc">Proactively shields against phishing pages, command-and-control botnets, and crypto-jacking scripts.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security Model -->
+  <section id="security" style="padding: 80px 0;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Security-First Architecture</h2>
+        <p>Engineered without compromise: no custom cryptography, no HTTPS tampering, no browsing logs.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <span class="card-icon">🔐</span>
+          <div class="card-title">WireGuard Core</div>
+          <div class="card-desc">Modern ChaCha20-Poly1305 symmetric encryption and Curve25519 key exchange running at kernel speeds.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">🔒</span>
+          <div class="card-title">Fail-Closed Kill Switch</div>
+          <div class="card-desc">If connectivity drops, all device traffic is immediately blocked to prevent accidental cleartext IP leakage.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">🌐</span>
+          <div class="card-title">Strict DNS Leak Prevention</div>
+          <div class="card-desc">All DNS requests are forcibly routed through 10.8.0.1, eliminating ISP and third-party sniffing completely.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Applications -->
+  <section id="apps" style="padding: 80px 0; background: var(--bg-surface);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Platforms & Applications</h2>
+        <p>Native applications built specifically for your devices.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <span class="card-icon">📱</span>
+          <div class="card-title">Android</div>
+          <div class="card-desc">Official WireGuard Android SDK integration, native VpnService kill switch, and Android Material 3 design.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">💻</span>
+          <div class="card-title">Windows</div>
+          <div class="card-desc">Native desktop client with system tray controls, automatic adapter management, and live performance gauges.</div>
+        </div>
+        <div class="feature-card">
+          <span class="card-icon">🐧</span>
+          <div class="card-title">Linux</div>
+          <div class="card-desc">First-class CLI (vortex connect) and desktop GUI integrating directly with wg-quick, resolvectl, and nftables.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section id="download" style="padding: 80px 0; text-align: center;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Get VORTEX VPN</h2>
+        <p>Download the official client or generate your ready-to-use WireGuard configuration.</p>
+      </div>
+
+      <div class="grid-3" style="max-width: 900px; margin: 0 auto 40px auto;">
+        <div class="feature-card">
+          <div style="font-size: 32px; margin-bottom: 8px;">📱</div>
+          <div class="card-title">Android</div>
+          <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 16px;">APK & Play Store compatible</p>
+          <a href="/manifest.json" class="btn btn-outline" style="width: 100%;">Install PWA</a>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 32px; margin-bottom: 8px;">💻</div>
+          <div class="card-title">Windows</div>
+          <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 16px;">Windows 10 / 11 Native</p>
+          <a href="http://127.0.0.1:8000" class="btn btn-outline" style="width: 100%;">Launch Web App</a>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 32px; margin-bottom: 8px;">🐧</div>
+          <div class="card-title">Linux</div>
+          <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 16px;">CLI & Systemd Ready</p>
+          <a href="http://127.0.0.1:8000/docs" class="btn btn-outline" style="width: 100%;">API & CLI Docs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" style="padding: 80px 0; background: var(--bg-surface);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Frequently Asked Questions</h2>
+        <p>Honest answers about VORTEX security and privacy principles.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Do you log my browsing activity?</div>
+          <div class="faq-a">No. VORTEX VPN does not store, monitor, or inspect any web destinations, page contents, or unencrypted payloads. Only anonymous, aggregate daily threat counters are recorded.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Why does VORTEX use the WireGuard protocol?</div>
+          <div class="faq-a">WireGuard uses modern cryptographic primitives (Curve25519, ChaCha20, BLAKE2s) and runs at near-wire speeds with significantly less code complexity than OpenVPN or IPsec.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How does the DNS Firewall block ads without HTTPS interception?</div>
+          <div class="faq-a">The DNS Firewall intercepts queries before domain resolution occurs. If a domain is identified as an ad or tracker, it returns 0.0.0.0, preventing the device from ever contacting the ad network. No TLS decryption or certificate manipulation is performed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 VORTEX VPN. All rights reserved. Open-source WireGuard security architecture.</p>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

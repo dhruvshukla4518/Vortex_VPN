@@ -1,0 +1,70 @@
+#!/usr/sbin/nft -f
+# ==============================================================================
+# VORTEX VPN - nftables Production Firewall Configuration
+# Implements strict stateful packet filtering, WireGuard NAT, and DNS redirection.
+# ==============================================================================
+
+flush ruleset
+
+table inet vortex_filter {
+    chain input {
+        type filter hook input priority filter; policy drop;
+
+        # Allow established and related traffic
+        ct state established,related accept
+
+        # Drop invalid packets
+        ct state invalid drop
+
+        # Loopback interface
+        iif "lo" accept
+
+        # Allow ICMP / Ping
+        ip protocol icmp accept
+        ip6 nexthdr icmpv6 accept
+
+        # Allow SSH (modify port if non-standard)
+        tcp dport 22 accept
+
+        # Allow WireGuard VPN tunnel endpoint (UDP 51820)
+        udp dport 51820 accept
+
+        # Allow internal DNS queries from WireGuard clients
+        iif "wg0" udp dport { 53, 5353 } accept
+        iif "wg0" tcp dport { 53, 5353 } accept
+
+        # Allow Control Plane HTTPS API
+        tcp dport { 80, 443, 8000 } accept
+    }
+
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+
+        # Allow traffic from WireGuard clients out to internet
+        iif "wg0" accept
+
+        # Allow return traffic to WireGuard clients
+        oif "wg0" ct state established,related accept
+    }
+
+    chain output {
+        type filter hook output priority filter; policy accept;
+    }
+}
+
+table ip vortex_nat {
+    chain prerouting {
+        type nat hook prerouting priority dstnat; policy accept;
+
+        # Force all DNS queries from WireGuard to local DNS Privacy Blocker (port 5353)
+        iif "wg0" udp dport 53 redirect to :5353
+        iif "wg0" tcp dport 53 redirect to :5353
+    }
+
+    chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+
+        # Masquerade traffic exiting to public internet (replace eth0 if needed)
+        oif "eth0" masquerade
+    }
+}

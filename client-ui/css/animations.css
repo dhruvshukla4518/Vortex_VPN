@@ -1,0 +1,115 @@
+/* ==============================================================================
+   VORTEX VPN - Animations & Micro-Interactions
+   GPU-accelerated transforms & opacity only for maximum 60fps performance
+   ============================================================================== */
+
+/* Rotating Vortex Rings */
+@keyframes vortex-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vortex-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Subtle Breathing Glow */
+@keyframes aura-breathe-connected {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+    box-shadow: 0 0 45px var(--status-connected-glow);
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.9;
+    box-shadow: 0 0 75px var(--status-connected-glow);
+  }
+}
+
+@keyframes aura-breathe-connecting {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+    box-shadow: 0 0 35px var(--status-connecting-glow);
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.85;
+    box-shadow: 0 0 65px var(--status-connecting-glow);
+  }
+}
+
+@keyframes aura-breathe-disconnected {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.5;
+  }
+}
+
+/* Server Node Ping Pulse */
+@keyframes ping-node {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Screen Transitions */
+@keyframes screen-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse Glow for Active Pills */
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+/* Utility Animation Classes */
+.animate-spin-slow {
+  animation: vortex-spin-slow 18s linear infinite;
+  will-change: transform;
+}
+
+.animate-spin-reverse {
+  animation: vortex-spin-reverse 12s linear infinite;
+  will-change: transform;
+}
+
+.animate-connecting-spin {
+  animation: vortex-spin-slow 2.5s linear infinite;
+  will-change: transform;
+}
+
+.screen-active {
+  animation: screen-fade-in var(--duration-normal) var(--ease-smooth) forwards;
+}

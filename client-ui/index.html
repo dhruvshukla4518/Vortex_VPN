@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#08090C">
+  <meta name="description" content="VORTEX VPN — One tap. Protected. WireGuard VPN & DNS Privacy Shield.">
+  <title>VORTEX VPN</title>
+  
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Desktop Sidebar Navigation -->
+    <aside class="desktop-sidebar">
+      <div class="brand-header">
+        <svg class="brand-emblem" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="#00E5FF" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <circle cx="16" cy="16" r="8" stroke="#4F46E5" stroke-width="2"/>
+          <circle cx="16" cy="16" r="3" fill="#00E5FF"/>
+        </svg>
+        <div class="brand-title">VORTEX VPN</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-screen="home">
+          <span class="nav-icon">🛡️</span> Home
+        </a>
+        <a href="#" class="nav-link" data-screen="locations">
+          <span class="nav-icon">🌍</span> Locations
+        </a>
+        <a href="#" class="nav-link" data-screen="security">
+          <span class="nav-icon">🔒</span> Security
+        </a>
+        <a href="#" class="nav-link" data-screen="dns">
+          <span class="nav-icon">⚡</span> DNS Shield
+        </a>
+        <a href="#" class="nav-link" data-screen="stats">
+          <span class="nav-icon">📊</span> Statistics
+        </a>
+        <a href="#" class="nav-link" data-screen="settings">
+          <span class="nav-icon">⚙️</span> Settings
+        </a>
+      </nav>
+
+      <div style="padding: 12px 14px; background: var(--bg-surface-elevated); border-radius: var(--radius-md); font-size: 12px;">
+        <div style="color: var(--text-muted);">Protocol</div>
+        <div style="font-weight: 600; color: var(--accent-cyan);">WireGuard · ChaCha20</div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+      <!-- Mobile Top Header -->
+      <header class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg style="width: 24px; height: 24px;" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="#00E5FF" stroke-width="2.5" stroke-dasharray="6 4"/>
+            <circle cx="16" cy="16" r="8" stroke="#4F46E5" stroke-width="2"/>
+            <circle cx="16" cy="16" r="3" fill="#00E5FF"/>
+          </svg>
+          <span style="font-weight: 700; font-size: 16px; letter-spacing: 0.05em;">VORTEX</span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" id="theme-toggle-btn" title="Toggle Theme">🌓</button>
+        </div>
+      </header>
+
+      <!-- Screens Container -->
+      <div class="screens-container">
+        
+        <!-- SCREEN 1: HOME -->
+        <section id="screen-home" class="screen active">
+          <!-- Top Status Pill -->
+          <div style="text-align: center; margin-top: 8px;">
+            <div id="main-status-pill" style="display: inline-flex; align-items: center; padding: 4px 14px; border-radius: var(--radius-full); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
+              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #EF4444; margin-right: 6px;"></span> NOT PROTECTED
+            </div>
+          </div>
+
+          <!-- Hero Vortex Control -->
+          <div class="vortex-hero-container">
+            <div id="vortex-ring-container"></div>
+            <button class="hero-connect-btn disconnected" id="hero-connect-btn">
+              <svg class="hero-lock-icon disconnected" id="hero-lock-icon" viewBox="0 0 24 24">
+                <path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm3 8H9V7a3 3 0 0 1 6 0v3z" fill="none" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="hero-btn-label" id="hero-btn-label">CONNECT</span>
+              <span class="hero-btn-sublabel" id="hero-btn-sublabel">Not Protected</span>
+            </button>
+          </div>
+
+          <!-- Location Selector Chip -->
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div class="location-chip" data-screen="locations">
+              <span class="country-flag" id="active-server-flag">🇩🇪</span>
+              <span class="location-text" id="active-server-name">Germany · Frankfurt</span>
+              <span class="badge-ping fast" id="active-server-ping">38 ms</span>
+            </div>
+          </div>
+
+          <!-- Network Real-Time Throughput Bar -->
+          <div class="network-speed-bar">
+            <div class="speed-metric">
+              <span class="speed-label">Download</span>
+              <span class="speed-value" id="live-dl-val">0.0 Mbps</span>
+            </div>
+            <div class="speed-metric">
+              <span class="speed-label">Upload</span>
+              <span class="speed-value" id="live-ul-val">0.0 Mbps</span>
+            </div>
+            <div class="speed-metric">
+              <span class="speed-label">Duration</span>
+              <span class="speed-value" id="stat-conn-duration">00:00:00</span>
+            </div>
+          </div>
+
+          <!-- Security Flow Pipeline -->
+          <div class="security-flow-container">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; font-weight: 600;">Tunnel Security Pipeline</div>
+            <div class="flow-nodes">
+              <div class="flow-node active">
+                <div class="flow-node-icon">📱</div>
+                <span class="flow-node-label">Device</span>
+              </div>
+              <div class="flow-line"></div>
+              <div class="flow-node">
+                <div class="flow-node-icon">🔒</div>
+                <span class="flow-node-label">WireGuard</span>
+              </div>
+              <div class="flow-line"></div>
+              <div class="flow-node">
+                <div class="flow-node-icon">🌐</div>
+                <span class="flow-node-label">Server</span>
+              </div>
+              <div class="flow-line"></div>
+              <div class="flow-node">
+                <div class="flow-node-icon">🛡️</div>
+                <span class="flow-node-label">DNS Shield</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Protection Modules Summary -->
+          <div class="protection-grid">
+            <div class="protection-card">
+              <div class="prot-info">
+                <span class="prot-icon">🛡️</span>
+                <span class="prot-title">DNS Protection</span>
+              </div>
+              <span class="prot-badge">ON</span>
+            </div>
+            <div class="protection-card">
+              <div class="prot-info">
+                <span class="prot-icon">🚫</span>
+                <span class="prot-title">Ad Blocking</span>
+              </div>
+              <span class="prot-badge">ON</span>
+            </div>
+            <div class="protection-card">
+              <div class="prot-info">
+                <span class="prot-icon">🕵️</span>
+                <span class="prot-title">Tracker Shield</span>
+              </div>
+              <span class="prot-badge">ON</span>
+            </div>
+            <div class="protection-card">
+              <div class="prot-info">
+                <span class="prot-icon">🔒</span>
+                <span class="prot-title">Kill Switch</span>
+              </div>
+              <span class="prot-badge">ON</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 2: LOCATIONS -->
+        <section id="screen-locations" class="screen">
+          <h1 style="margin-bottom: 16px;">Server Locations</h1>
+          <input type="text" id="server-search-input" placeholder="Search country or city..." style="width: 100%; margin-bottom: 16px;">
+
+          <!-- AUTO / Fastest Server Card -->
+          <div class="protection-card" id="auto-server-card" style="margin-bottom: 16px; border: 1px solid var(--border-active); cursor: pointer; background: rgba(0, 229, 255, 0.05);">
+            <div class="prot-info">
+              <span style="font-size: 24px;">⚡</span>
+              <div>
+                <div style="font-weight: 700; color: var(--accent-cyan);">AUTO / FASTEST SERVER</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Calculates optimal node via latency & capacity</div>
+              </div>
+            </div>
+            <span class="badge-ping fast">Auto</span>
+          </div>
+
+          <!-- World Map -->
+          <div id="world-map-container" style="margin-bottom: 20px;"></div>
+
+          <h3 style="margin-bottom: 12px;">Available VPN Nodes</h3>
+          <div id="server-cards-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </section>
+
+        <!-- SCREEN 3: SECURITY CENTER -->
+        <section id="screen-security" class="screen">
+          <h1 style="margin-bottom: 16px;">Security Center</h1>
+          
+          <div class="protection-card" style="margin-bottom: 20px; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+            <div class="prot-info">
+              <span style="font-size: 28px;">🛡️</span>
+              <div>
+                <div style="font-weight: 700; color: var(--status-connected); font-size: 16px;">FAIL-CLOSED KILL SWITCH READY</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">Unintended traffic is blocked if tunnel drops unexpectedly.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+            <div class="protection-card">
+              <div>
+                <div style="font-weight: 600;">Kill Switch</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Prevent traffic bypass when disconnected</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked data-security-toggle="killSwitch">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="protection-card">
+              <div>
+                <div style="font-weight: 600;">DNS Leak Protection</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Strictly route queries through tunnel resolver</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked data-security-toggle="dnsProtection">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="protection-card">
+              <div>
+                <div style="font-weight: 600;">IPv6 Leak Protection</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Prevent IPv6 bypass leaks</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked data-security-toggle="ipv6Protection">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <h3 style="margin-bottom: 12px;">Security Diagnostics</h3>
+          <div class="protection-card" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span>DNS Resolver Verification</span>
+              <span class="badge-ping fast">PASS</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span>IPv4 WireGuard Encrypted</span>
+              <span class="badge-ping fast">PASS</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span>IPv6 Tunnel Isolation</span>
+              <span class="badge-ping fast">PASS</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 4: DNS SHIELD -->
+        <section id="screen-dns" class="screen">
+          <h1 style="margin-bottom: 16px;">DNS Shield & Privacy</h1>
+          
+          <!-- Hero Threat Counter -->
+          <div style="text-align: center; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px;">
+            <div style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Total Blocked Today</div>
+            <div style="font-size: 42px; font-weight: 800; font-family: var(--font-mono); color: var(--accent-cyan); line-height: 1.2;" id="dns-hero-total">1,763</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Ads, trackers, and telemetry prevented</div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div class="protection-card" style="flex-direction: column; text-align: center; padding: 12px;">
+              <div style="font-size: 11px; color: var(--text-muted);">Ads</div>
+              <div style="font-size: 20px; font-weight: 700;" id="dns-count-ads">1,284</div>
+            </div>
+            <div class="protection-card" style="flex-direction: column; text-align: center; padding: 12px;">
+              <div style="font-size: 11px; color: var(--text-muted);">Trackers</div>
+              <div style="font-size: 20px; font-weight: 700;" id="dns-count-trackers">467</div>
+            </div>
+            <div class="protection-card" style="flex-direction: column; text-align: center; padding: 12px;">
+              <div style="font-size: 11px; color: var(--text-muted);">Malware</div>
+              <div style="font-size: 20px; font-weight: 700;" id="dns-count-malware">12</div>
+            </div>
+          </div>
+
+          <!-- Timeline Chart Container -->
+          <h3 style="margin-bottom: 10px;">Threats Blocked (Last 7 Days)</h3>
+          <div id="dns-timeline-chart" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; margin-bottom: 20px;"></div>
+
+          <!-- Live Activity Feed -->
+          <h3 style="margin-bottom: 10px;">Live Blocked Feed</h3>
+          <div id="dns-activity-list"></div>
+        </section>
+
+        <!-- SCREEN 5: STATISTICS -->
+        <section id="screen-stats" class="screen">
+          <h1 style="margin-bottom: 16px;">Network Analytics</h1>
+
+          <div class="protection-card" style="flex-direction: column; align-items: stretch; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="font-weight: 600;">Download Throughput</span>
+              <span style="font-family: var(--font-mono); color: var(--accent-cyan);">14.2 Mbps Avg</span>
+            </div>
+            <div id="stats-dl-sparkline"></div>
+          </div>
+
+          <div class="protection-card" style="flex-direction: column; align-items: stretch; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="font-weight: 600;">Upload Throughput</span>
+              <span style="font-family: var(--font-mono); color: var(--accent-purple);">2.4 Mbps Avg</span>
+            </div>
+            <div id="stats-ul-sparkline"></div>
+          </div>
+
+          <div class="protection-grid">
+            <div class="protection-card">
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted);">Packet Loss</div>
+                <div style="font-size: 18px; font-weight: 700;">0.0%</div>
+              </div>
+              <span class="badge-ping fast">Healthy</span>
+            </div>
+            <div class="protection-card">
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted);">Handshake</div>
+                <div style="font-size: 18px; font-weight: 700;">Active</div>
+              </div>
+              <span class="badge-ping fast">Curve25519</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 6: SETTINGS -->
+        <section id="screen-settings" class="screen">
+          <h1 style="margin-bottom: 16px;">Settings</h1>
+
+          <h3 style="margin-bottom: 10px; color: var(--text-muted);">General</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;">
+            <div class="protection-card">
+              <div>
+                <div style="font-weight: 600;">Reduced Motion</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Pause high-frequency spinning animations</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="reduced-motion-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="protection-card">
+              <div>
+                <div style="font-weight: 600;">Auto-Connect on Launch</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Automatically connect when app opens</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <h3 style="margin-bottom: 10px; color: var(--text-muted);">Privacy & Retention</h3>
+          <div class="protection-card" style="flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px;">
+            <div style="font-weight: 600;">Zero Browsing History Guarantee</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">VORTEX VPN does not inspect, store, or log user browsing destinations, page content, or HTTPS traffic. Only aggregate DNS counter metrics are kept.</div>
+          </div>
+
+          <div style="text-align: center; color: var(--text-muted); font-size: 12px;">
+            VORTEX VPN v1.0.0 · WireGuard Protocol
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <div class="bottom-nav-item active" data-screen="home">
+          <span>🛡️</span>
+          <span>Home</span>
+        </div>
+        <div class="bottom-nav-item" data-screen="locations">
+          <span>🌍</span>
+          <span>Locations</span>
+        </div>
+        <div class="bottom-nav-item" data-screen="security">
+          <span>🔒</span>
+          <span>Security</span>
+        </div>
+        <div class="bottom-nav-item" data-screen="dns">
+          <span>⚡</span>
+          <span>DNS</span>
+        </div>
+        <div class="bottom-nav-item" data-screen="settings">
+          <span>⚙️</span>
+          <span>Settings</span>
+        </div>
+      </nav>
+    </main>
+  </div>
+
+  <!-- Onboarding Walkthrough Modal -->
+  <div class="modal-overlay" id="onboarding-modal">
+    <div class="modal-content" style="text-align: center;">
+      <svg style="width: 56px; height: 56px; margin: 0 auto 16px auto;" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="14" stroke="#00E5FF" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <circle cx="16" cy="16" r="8" stroke="#4F46E5" stroke-width="2"/>
+        <circle cx="16" cy="16" r="3" fill="#00E5FF"/>
+      </svg>
+      <h2 style="margin-bottom: 8px;">Welcome to VORTEX VPN</h2>
+      <p style="margin-bottom: 20px; font-size: 14px;">Next-generation encrypted WireGuard privacy and DNS-level ad/tracker interception across global servers.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; text-align: left;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <span>🔒</span>
+          <span style="font-size: 13px;">Curve25519 WireGuard tunnel encryption</span>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <span>⚡</span>
+          <span style="font-size: 13px;">DNS-level ad, tracker, and malware blocking</span>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <span>🌍</span>
+          <span style="font-size: 13px;">Fast multi-country server nodes with auto-selection</span>
+        </div>
+      </div>
+
+      <button id="onboarding-get-started-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #00E5FF, #4F46E5); color: #08090C; font-weight: 700; border-radius: var(--radius-md);">
+        GET STARTED
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/state.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/vortex.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
