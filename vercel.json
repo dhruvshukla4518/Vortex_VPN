@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/app/(.*)",
+      "destination": "/client-ui/$1"
+    },
+    {
+      "source": "/app",
+      "destination": "/client-ui/index.html"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/website/assets/$1"
+    },
+    {
+      "source": "/css/(.*)",
+      "destination": "/website/css/$1"
+    },
+    {
+      "source": "/js/(.*)",
+      "destination": "/website/js/$1"
+    },
+    {
+      "source": "/",
+      "destination": "/website/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/website/$1"
+    }
+  ]
+}

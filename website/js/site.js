@@ -3,6 +3,12 @@
  * Connects to the real FastAPI backend to display genuine fleet status.
  */
 
+const API_BASE = window.VORTEX_API_URL || (
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://127.0.0.1:8000/api/v1"
+    : "/api/v1"
+);
+
 document.addEventListener("DOMContentLoaded", () => {
   loadLiveFleet();
 });
@@ -12,7 +18,7 @@ async function loadLiveFleet() {
   if (!tableBody) return;
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/v1/servers");
+    const res = await fetch(`${API_BASE}/servers`);
     if (res.ok) {
       const servers = await res.json();
       renderFleetTable(servers);
