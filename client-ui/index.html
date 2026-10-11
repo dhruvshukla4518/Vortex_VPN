@@ -8,6 +8,10 @@
   <title>VORTEX VPN</title>
   
   <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VORTEX VPN">
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/animations.css">
@@ -39,6 +43,9 @@
         </a>
         <a href="#" class="nav-link" data-screen="dns">
           <span class="nav-icon">⚡</span> DNS Shield
+        </a>
+        <a href="#" class="nav-link" data-screen="connect-device">
+          <span class="nav-icon">📱</span> Connect Device
         </a>
         <a href="#" class="nav-link" data-screen="stats">
           <span class="nav-icon">📊</span> Statistics
@@ -176,6 +183,18 @@
               </div>
               <span class="prot-badge">ON</span>
             </div>
+          </div>
+
+          <!-- Quick Connect Other Devices Card -->
+          <div class="protection-card" style="margin-top: 16px; cursor: pointer; border: 1px dashed var(--accent-cyan); background: rgba(0, 229, 255, 0.04);" data-screen="connect-device">
+            <div class="prot-info">
+              <span style="font-size: 26px;">📲</span>
+              <div>
+                <div style="font-weight: 700; color: var(--accent-cyan); font-size: 14px;">Connect Phone & Other Devices</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">1-tap QR scan or .conf download for iOS, Android, Mac & PC</div>
+              </div>
+            </div>
+            <span class="badge-ping fast" style="background: rgba(0,229,255,0.15); color: var(--accent-cyan);">QR Code</span>
           </div>
         </section>
 
@@ -382,6 +401,90 @@
           </div>
         </section>
 
+        <!-- SCREEN: CONNECT ANY DEVICE (QR CODE & .CONF) -->
+        <section id="screen-connect-device" class="screen">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <div>
+              <h1 style="margin: 0; font-size: 22px;">Connect Any Device</h1>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Use VORTEX VPN on iPhone, Android, Mac, Windows, Linux, or iPad</div>
+            </div>
+            <button class="icon-btn" data-screen="home" title="Back to Home">✕</button>
+          </div>
+
+          <!-- Step 1: Select Country -->
+          <div style="background: var(--bg-surface-elevated); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--accent-cyan);">1. Choose VPN Location</span>
+              <span id="selected-profile-badge" style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">🇩🇪 Germany</span>
+            </div>
+            <div id="device-country-selector" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px;">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Step 2: Instant Connection QR & Profile -->
+          <div style="background: var(--bg-surface-elevated); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); text-align: center; margin-bottom: 24px;">
+            <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px;">📲 Instant Mobile Setup</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+              Scan with <b>WireGuard app</b> (iOS / Android) or camera to connect in 2 seconds
+            </div>
+            
+            <div style="display: inline-flex; padding: 14px; background: #FFFFFF; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" id="qr-canvas-wrapper">
+              <div id="device-qrcode"></div>
+            </div>
+
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+              <a id="btn-download-conf" href="#" download="vortex_de.conf" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: var(--accent-cyan); color: #08090C; font-weight: 700; border-radius: var(--radius-md); text-decoration: none; font-size: 13px;">
+                <span>⬇️</span> Download .conf Profile
+              </a>
+              <button id="btn-copy-conf" style="display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); font-weight: 600; border-radius: var(--radius-md); font-size: 13px; cursor: pointer;">
+                <span>📋</span> Copy Config
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Setup Guides for Each OS -->
+          <div style="background: var(--bg-surface-elevated); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 24px;">
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 14px; color: var(--accent-cyan);">🚀 30-Second Setup Instructions</div>
+            
+            <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <span style="font-size: 20px; line-height: 1;">📱</span>
+                <div>
+                  <div style="font-weight: 600;">iPhone, iPad & Android</div>
+                  <div style="color: var(--text-secondary); font-size: 12px; margin-top: 2px;">
+                    1. Install free <b>WireGuard</b> from the App Store or Google Play.<br>
+                    2. Tap <b>(+)</b> &rarr; <b>Create from QR code</b> &rarr; Point camera at the QR code above.<br>
+                    3. Toggle tunnel ON. Ads, trackers, and malicious domains are blocked automatically!
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <span style="font-size: 20px; line-height: 1;">💻</span>
+                <div>
+                  <div style="font-weight: 600;">Windows, Mac & Linux</div>
+                  <div style="color: var(--text-secondary); font-size: 12px; margin-top: 2px;">
+                    1. Click <b>Download .conf Profile</b> above.<br>
+                    2. Open WireGuard on your PC &rarr; click <b>Add Tunnel</b> &rarr; select downloaded file.<br>
+                    3. Click <b>Activate</b> to start encrypted VPN tunneling.
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <span style="font-size: 20px; line-height: 1;">🌐</span>
+                <div>
+                  <div style="font-weight: 600;">Install as Home-Screen App (PWA)</div>
+                  <div style="color: var(--text-secondary); font-size: 12px; margin-top: 2px;">
+                    Tap your browser menu (<b>⋮</b> on Android or <b>Share</b> on iOS) &rarr; tap <b>Add to Home Screen</b> to install VORTEX VPN as a standalone mobile app.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <!-- Mobile Bottom Navigation Bar -->
@@ -448,6 +551,7 @@
   <script src="/js/vortex.js"></script>
   <script src="/js/map.js"></script>
   <script src="/js/charts.js"></script>
+  <script src="/js/qrcode.min.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

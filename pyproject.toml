@@ -39,3 +39,6 @@ asyncio_mode = "auto"
 pythonpath = [".", "dns-blocker", "server-agent"]
 testpaths = ["backend/tests", "dns-blocker/tests", "server-agent/tests"]
 python_files = ["test_*.py"]
+
+[tool.vercel]
+entrypoint = "backend.app.main:app"

@@ -43,6 +43,11 @@ async function initApp() {
 
   // 7. Initialize Onboarding if first visit
   checkOnboarding();
+
+  // 8. Register Service Worker for PWA installation & offline assets
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").catch(e => console.log("SW fail:", e));
+  }
 }
 
 function setupNavigation() {
@@ -83,6 +88,8 @@ function navigateToScreen(screenId) {
     renderStatsCharts();
   } else if (screenId === "dns") {
     loadDnsScreenData();
+  } else if (screenId === "connect-device") {
+    loadConnectDeviceData();
   }
 }
 
@@ -501,3 +508,96 @@ function getCountryFlagEmoji(countryCode) {
   };
   return flagMap[code] || "🌐";
 }
+
+// ==========================================
+// CONNECT ANY DEVICE (QR CODE & .CONF)
+// ==========================================
+let activeDeviceCountry = "DE";
+let currentQrCodeInstance = null;
+let currentDeviceConfigText = "";
+
+async function loadConnectDeviceData(countryCode = null) {
+  if (countryCode) activeDeviceCountry = countryCode.toUpperCase();
+  const selector = document.getElementById("device-country-selector");
+  if (!selector) return;
+
+  const supportedCountries = [
+    { code: "DE", name: "Germany", flag: "🇩🇪" },
+    { code: "US", name: "United States", flag: "🇺🇸" },
+    { code: "IN", name: "India", flag: "🇮🇳" },
+    { code: "GB", name: "United Kingdom", flag: "🇬🇧" },
+    { code: "SG", name: "Singapore", flag: "🇸🇬" },
+    { code: "NL", name: "Netherlands", flag: "🇳🇱" },
+  ];
+
+  selector.innerHTML = "";
+  supportedCountries.forEach(c => {
+    const btn = document.createElement("button");
+    const isSel = c.code === activeDeviceCountry;
+    btn.style.cssText = `padding: 8px 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; justify-content: center; border: 1px solid ${isSel ? "var(--accent-cyan)" : "var(--border-subtle)"}; background: ${isSel ? "rgba(0, 229, 255, 0.12)" : "var(--bg-surface)"}; color: ${isSel ? "var(--accent-cyan)" : "var(--text-primary)"}; transition: all 0.2s ease;`;
+    btn.innerHTML = `<span>${c.flag}</span> <span>${c.name}</span>`;
+    btn.onclick = () => loadConnectDeviceData(c.code);
+    selector.appendChild(btn);
+  });
+
+  const badge = document.getElementById("selected-profile-badge");
+  const activeObj = supportedCountries.find(c => c.code === activeDeviceCountry) || supportedCountries[0];
+  if (badge) badge.innerText = `${activeObj.flag} ${activeObj.name}`;
+
+  const downloadBtn = document.getElementById("btn-download-conf");
+  const confUrl = `/api/v1/vpn/profile/${activeDeviceCountry.toLowerCase()}.conf`;
+  if (downloadBtn) {
+    downloadBtn.setAttribute("href", confUrl);
+    downloadBtn.setAttribute("download", `vortex_${activeDeviceCountry.toLowerCase()}.conf`);
+  }
+
+  // Fetch config content from backend to generate instant QR code
+  try {
+    const res = await fetch(confUrl);
+    if (res.ok) {
+      currentDeviceConfigText = await res.text();
+      renderDeviceQr(currentDeviceConfigText);
+    }
+  } catch (err) {
+    console.warn("Could not fetch VPN profile for QR code:", err);
+  }
+
+  const copyBtn = document.getElementById("btn-copy-conf");
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      if (currentDeviceConfigText) {
+        navigator.clipboard.writeText(currentDeviceConfigText).then(() => {
+          copyBtn.innerText = "✓ Config Copied!";
+          setTimeout(() => { copyBtn.innerHTML = "<span>📋</span> Copy Config"; }, 2000);
+        });
+      }
+    };
+  }
+}
+
+function renderDeviceQr(text) {
+  const container = document.getElementById("device-qrcode");
+  if (!container || typeof QRCode === "undefined") return;
+  container.innerHTML = "";
+  try {
+    currentQrCodeInstance = new QRCode(container, {
+      text: text,
+      width: 180,
+      height: 180,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.L
+    });
+  } catch (e) {
+    console.error("QR Code rendering error:", e);
+  }
+}
+
+// PWA deferred install prompt support
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  console.log("VORTEX VPN PWA ready for installation");
+});
+
